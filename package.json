@@ -13,13 +13,14 @@
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
+    "react-intersection-observer": "^8.31.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "app": "concurrently \"cd server && npm run app\" \"react-scripts start\"",
+    "app": "concurrently \"cd server && npm run app\" \"npm run start -FAST_REFRESH=true\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
