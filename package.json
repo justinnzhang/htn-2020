@@ -10,6 +10,7 @@
     "bootstrap": "^4.5.3",
     "concurrently": "^5.3.0",
     "framer-motion": "^3.2.1",
+    "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
@@ -20,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "app": "concurrently \"cd server && npm run app\" \"npm run start -FAST_REFRESH=true\"",
+    "app": "concurrently \"cd server && npm run app\" \"npm run start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -4,6 +4,8 @@ const app = express();
 const bodyParser = require('body-parser');
 var cors = require('cors');
 
+const connectDB = require('./db');
+
 const port = process.env.PORT || 5000;
 
 // cors
@@ -13,6 +15,8 @@ app.use(
     credentials: true,
   })
 );
+
+connectDB();
 
 // Bodyparser middleware
 app.use(

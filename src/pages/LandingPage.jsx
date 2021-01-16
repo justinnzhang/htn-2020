@@ -1,28 +1,49 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import '../App.css';
+import './pages.css';
+
+import { Container, Row, Col, Button, Image } from 'react-bootstrap';
 
 import FadeUp from '../animation/FadeUp';
+import FadeUpChild from '../animation/FadeUpChild';
 
-import { fadeUpChild } from '../animation/variants';
+import InvisibleButton from '../components/InvisibleButton';
+
+import HeroImage from '../assets/hero1.svg';
 
 const LandingPage = () => {
   return (
-    <Container className='mt-5'>
+    <Container fluid>
       <Row>
-        <Col>
-          <h2>MeetBetween</h2>
+        <Col className='banner-callout shadow-sm'>
+          <p className='text-close text-muted h6'>
+            Created for Hack The North 2020++
+          </p>
         </Col>
       </Row>
-      <Row>
+      <Row style={{ background: '#f2f2f2' }}>
         <Col>
-          <FadeUp>
-            <motion.p variants={fadeUpChild}>
-              Creating the hybrid office of the future
-            </motion.p>
-            <motion.p variants={fadeUpChild}>wtf</motion.p>
-          </FadeUp>
+          <Container className='mt-5'>
+            <FadeUp>
+              <Row>
+                <Col className='my-auto'>
+                  <h2 className='gradient-text'>MeetBetween</h2>
+                  <FadeUpChild>
+                    <p>The home of hybrid work</p>
+                  </FadeUpChild>
+                  <FadeUpChild>
+                    <InvisibleButton text='Get Started' />
+                  </FadeUpChild>
+                </Col>
+                <Col>
+                  <FadeUpChild>
+                    <Image src={HeroImage} fluid className='p-5' />
+                  </FadeUpChild>
+                </Col>
+              </Row>
+            </FadeUp>
+          </Container>
         </Col>
       </Row>
     </Container>
