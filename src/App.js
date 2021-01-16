@@ -7,7 +7,9 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path='/' render={LandingPage} />
+        <Route exact path='/'>
+          <LandingPage />
+        </Route>
       </Switch>
     </Router>
   );
