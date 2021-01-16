@@ -4,3 +4,21 @@
 
   border-top: 5px solid blue;
 }
+
+.hero-cover {
+  background: url('https://doixzan7hf4ti.cloudfront.net/hack-the-north-assets/hero1alt-sm.svg');
+  background-size: cover;
+  background-position: center;
+  min-height: 75vh;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 768px) {
+  .hero-cover {
+    background: url('https://doixzan7hf4ti.cloudfront.net/hack-the-north-assets/hero1alt.svg');
+    min-height: 80vh;
+    background-size: contain;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+}
