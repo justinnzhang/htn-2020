@@ -8,6 +8,8 @@ const connectDB = require('./db');
 
 const port = process.env.PORT || 5000;
 
+const rooms = require("./api/routes/rooms");
+
 // cors
 app.use(
   cors({
@@ -26,6 +28,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+app.use('/api/rooms', rooms);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 

@@ -8,11 +8,7 @@ const roomSchema = mongoose.Schema({
 	capacity: { 
 		type: Number, 
 		max: 20		// arbitrary max capacity
-	},	
-	booked: {
-		type: Boolean,
-		default: false
 	}
 });
 
-const room = module.exports = mongoose.model('Room', roomSchema);
+module.exports = Room = mongoose.model('room', roomSchema);
