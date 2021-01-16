@@ -4,7 +4,7 @@ body {
 }
 
 /*Text Formatting*/
-.gradient-text {
+.gradient-text-hero {
   background-color: darkgrey;
   background-image: linear-gradient(45deg, #6446f7, #ff28ae);
   background-size: 100%;
@@ -16,4 +16,5 @@ body {
 
 .text-close {
   margin-bottom: 0px;
+  padding-bottom: 0px;
 }

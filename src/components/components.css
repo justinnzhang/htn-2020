@@ -1,13 +1,67 @@
-.invisible-btn {
-  transition: all 0.3;
-  cursor: pointer;
+/* INVISIBLE BUTTON -------------------------- */
 
+.invisible-btn {
+  cursor: pointer;
   display: inline-block;
+  transition: all 0.2s ease;
+
+  background-color: darkgrey;
+  background-image: linear-gradient(45deg, #6446f7, #ff28ae);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
 }
+
+.invisible-btn:hover {
+  text-decoration: underline;
+}
+
 .arrow-btn {
   display: inline-block;
+  transition: all 0.3s ease;
 }
 
-.invisible-btn:hover .arrow-btn {
-  transform: translateX(10px);
+.invisible-btn:hover > .arrow-btn {
+  transform: translateX(5px);
+}
+
+/* CARD -------------------------- */
+.card-item {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+}
+.card-item p {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+@media (min-width: 768px) {
+  .card-item {
+    min-height: 12rem;
+  }
+}
+
+/* Showcase -------------------------- */
+.showcase-btn {
+  text-align: left;
+
+  cursor: pointer;
+  border-radius: 8px;
+
+  transition: all 0.3s ease;
+  padding: 1rem;
+
+  display: inline-block;
+}
+.showcase-btn:hover {
+  background: #f2f2f2;
+}
+
+@media (min-width: 992px) {
+  .showcase-btn {
+    width: 100%;
+  }
 }

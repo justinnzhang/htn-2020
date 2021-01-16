@@ -1,14 +1,18 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 import PropTypes from 'prop-types';
 
 import './components.css';
 
+import { IoArrowForwardOutline } from 'react-icons/io5';
+
 const InvisibleButton = ({ text }) => {
   return (
-    <div className='invisible-btn'>
-      {text} <div className='arrow-btn'>BEE</div>
+    <div className='invisible-btn font-weight-medium'>
+      {text}{' '}
+      <div className='arrow-btn'>
+        <IoArrowForwardOutline />
+      </div>
     </div>
   );
 };
