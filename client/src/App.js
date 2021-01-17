@@ -14,7 +14,7 @@ const url =
     : 'http://localhost:5000/api/roomservice';
 
 async function AuthCheck({ room, userID, name }) {
-  const response = await fetch('http://localhost:5000/api/roomservice', {
+  const response = await fetch('/api/roomservice', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

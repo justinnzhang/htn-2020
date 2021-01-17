@@ -78,7 +78,7 @@ export default class VideoChat extends React.Component {
   };
 
   componentWillMount() {
-    fetch('http://localhost:5000/api/token')
+    fetch('/api/token')
       .then((data) => data.json())
       .then((data) => {
         this.setState({ sessionData: data });
@@ -99,39 +99,47 @@ export default class VideoChat extends React.Component {
     } else {
       return (
         // console.log(this.state.sessionData.apiKey, this.state.sessionData.sessionId, this.state.sessionData.token);
-        <div>
-          <div id='sessionStatus'>Session Status: {connection}</div>
-          {/* {error ? (
+        <Row>
+          <Col>
+            <div id='sessionStatus'>
+              <p>Session Status: {connection}</p>
+            </div>
+            {/* {error ? (
             <div className='error'>
-              <strong>Error:</strong> {error}
+            <strong>Error:</strong> {error}
             </div>
           ) : null} */}
-          <OTSession
-            apiKey={this.state.sessionData.apiKey}
-            sessionId={this.state.sessionData.sessionId}
-            token={this.state.sessionData.token}
-            onError={this.onSessionError}
-            eventHandlers={this.sessionEventHandlers}
-          >
-            <Button id='videoButton' onClick={this.toggleVideo}>
-              {publishVideo ? 'Disable' : 'Enable'} Video
-            </Button>
-            <OTPublisher
-              properties={{ publishVideo, width: 200, height: 200 }}
-              onPublish={this.onPublish}
-              onError={this.onPublishError}
-              eventHandlers={this.publisherEventHandlers}
-            />
-            <OTStreams>
-              <OTSubscriber
-                properties={{ width: 200, height: 200 }}
-                onSubscribe={this.onSubscribe}
-                onError={this.onSubscribeError}
-                eventHandlers={this.subscriberEventHandlers}
+            <OTSession
+              apiKey={this.state.sessionData.apiKey}
+              sessionId={this.state.sessionData.sessionId}
+              token={this.state.sessionData.token}
+              onError={this.onSessionError}
+              eventHandlers={this.sessionEventHandlers}
+            >
+              <Button id='videoButton' onClick={this.toggleVideo}>
+                {publishVideo ? 'Disable' : 'Enable'} Video
+              </Button>
+              <OTPublisher
+                properties={{ publishVideo, width: 200, height: 200 }}
+                onPublish={this.onPublish}
+                onError={this.onPublishError}
+                eventHandlers={this.publisherEventHandlers}
               />
-            </OTStreams>
-          </OTSession>
-        </div>
+              <OTStreams>
+                <Row>
+                  <Col>
+                    <OTSubscriber
+                      properties={{ width: 200, height: 200 }}
+                      onSubscribe={this.onSubscribe}
+                      onError={this.onSubscribeError}
+                      eventHandlers={this.subscriberEventHandlers}
+                    />
+                  </Col>
+                </Row>
+              </OTStreams>
+            </OTSession>
+          </Col>
+        </Row>
       );
     }
   }

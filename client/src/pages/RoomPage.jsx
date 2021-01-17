@@ -75,7 +75,6 @@ function VideoWrapper({ visible, setVisible, setEntered }) {
         <div className='notification-container shadow'>
           <VideoChat />
           <Button
-            block
             onClick={() => {
               setVisible(false);
               setEntered(false);
@@ -177,6 +176,11 @@ const RoomPage = ({ userID, color }) => {
       <div className='ui-card shadow top-left'>
         <p className='text-close'>
           <IoInformationCircle /> Tip: Right click to open the settings menu!
+        </p>
+      </div>
+      <div className='ui-card shadow bottom-right'>
+        <p className='text-close'>
+          There are {Object.values(joined).length} co-workers online
         </p>
       </div>
       <div className='ui-card shadow bottom-left'>

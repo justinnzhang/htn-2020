@@ -14,14 +14,18 @@ const options = [
   {
     title: 'Engaging Virtual Space',
     description:
-      'Users engaging on our platform utilize cursors that act like real-time characters, being able to move around the space ',
+      'Users engaging on our platform utilize cursors that act like real-time characters, allowing them to interact with each other in real time',
   },
   {
     title: 'Real Time Meeting Rooms',
     description:
       'Mimicking real office rooms in buildings, users would be able to move in and out of rooms just like an in-person interaction, and enjoying the ability to schedule meetings seamlessly in both the personal and professional setting',
   },
-  { title: 'Room Bookings', description: 'Some words for this part' },
+  {
+    title: 'Bridging The Virtual Gap',
+    description:
+      'Using the platform, employees in-person can interact with remote employees and vice versa in dedicated bridging zones',
+  },
 ];
 
 const display = [
@@ -84,7 +88,7 @@ const Showcase = () => {
             <AnimateChild key={`Showcase choice - ${index}`}>
               <div className='showcase-btn' onClick={() => setChoice(index)}>
                 <h4
-                  className={`h5 text-close ${
+                  className={`h5 ${
                     index === choice ? 'gradient-text-hero' : ''
                   }`}
                 >

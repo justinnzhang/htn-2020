@@ -46,6 +46,12 @@
 
   margin: 20px;
 }
+.bottom-right {
+  right: 0;
+  bottom: 0;
+
+  margin: 20px;
+}
 
 .top-left {
   left: 0;
