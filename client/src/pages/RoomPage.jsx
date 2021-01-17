@@ -19,8 +19,7 @@ function SettingModal(props) {
       {...props}
       size='sm'
       aria-labelledby='contained-modal-title-vcenter'
-      centered
-    >
+      centered>
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>Settings</Modal.Title>
       </Modal.Header>
@@ -30,8 +29,7 @@ function SettingModal(props) {
           variant='danger'
           onClick={() => {
             history.push('/');
-          }}
-        >
+          }}>
           Logout
         </Button>
       </Modal.Body>
@@ -45,12 +43,9 @@ function EnterRoom(props) {
       {...props}
       size='sm'
       aria-labelledby='contained-modal-title-vcenter'
-      centered
-    >
+      centered>
       <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>
-          Enter Room 1
-        </Modal.Title>
+        <Modal.Title id='contained-modal-title-vcenter'>{props.roomName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Button
@@ -59,8 +54,7 @@ function EnterRoom(props) {
           onClick={() => {
             props.setVisible(true);
             props.setEntered(false);
-          }}
-        >
+          }}>
           Join Call
         </Button>
       </Modal.Body>
@@ -78,8 +72,7 @@ function VideoWrapper({ visible, setVisible, setEntered }) {
             onClick={() => {
               setVisible(false);
               setEntered(false);
-            }}
-          >
+            }}>
             Leave Room
           </Button>
         </div>
@@ -92,6 +85,7 @@ const RoomPage = ({ userID, color }) => {
   const [joined, joinedClient] = usePresence('myroom', 'joined');
 
   const [entered, setEntered] = useState(false);
+  const [roomTitle, setRoomTitle] = useState('');
   const [modalShow, setModalShow] = useState(false);
   const [isOutsideCanvas, setIsOutsideCanvas] = useState(false);
 
@@ -101,31 +95,47 @@ const RoomPage = ({ userID, color }) => {
     function onMouseMove(e) {
       const canvas = e.target.getBoundingClientRect();
 
-      const windowWidth = parseInt(canvas.width);
-      const windowHeight = parseInt(canvas.height);
+      const windowWidth = parseInt(window.innerWidth);
+      const windowHeight = parseInt(window.innerHeight);
 
       const maxWidth = windowWidth * 0.7;
-      const offsetWidth = (windowWidth - maxWidth) / 2;
+      const offsetWidth = (windowWidth - maxWidth) / 2 + windowWidth * 0.2;
       const maxHeight = 500;
       const offsetHeight = (windowHeight - maxHeight) / 2;
 
-      var x =
-        e.clientX > windowWidth - maxWidth - offsetWidth
-          ? e.clientX
-          : windowWidth - maxWidth - offsetWidth;
-      // var x = e.clientX;
-      var y =
-        e.clientY > windowHeight - maxHeight - offsetHeight
-          ? e.clientY
-          : windowHeight - maxHeight - offsetHeight;
-      // var y = e.clientY;
+      var x = 0;
+      var y = 0;
+
+      if (
+        e.clientX > windowWidth - maxWidth - offsetWidth &&
+        e.clientX < windowWidth - offsetWidth - 55 &&
+        e.clientX > (windowWidth - maxWidth) / 2
+      ) {
+        x = e.clientX;
+      } else if (e.clientX < (windowWidth - maxWidth) / 2) {
+        x = (windowWidth - maxWidth) / 2;
+      } else if (e.clientX > windowWidth - maxWidth - offsetWidth) {
+        x = windowWidth - offsetWidth - 55;
+      } else if (e.clientX < windowWidth - offsetWidth - 55) {
+        x = windowWidth - maxWidth - offsetWidth;
+      }
+
+      if (
+        e.clientY > windowHeight - maxHeight - offsetHeight &&
+        e.clientY < windowHeight - offsetHeight - 90
+      ) {
+        y = e.clientY;
+      } else if (e.clientY > windowHeight - maxHeight - offsetHeight) {
+        y = windowHeight - offsetHeight - 90;
+      } else if (e.clientY < windowHeight - offsetHeight - 90) {
+        y = windowHeight - maxHeight - offsetHeight;
+      }
+
       console.log({ windowWidth, windowHeight });
       console.log({ maxWidth, maxHeight });
       console.log({ offsetWidth, offsetHeight });
       console.log({ clientX: e.clientX, clientY: e.clientY });
       console.log({ actualX: x, actualY: y });
-      if (e.clientX > maxWidth - 100 && y > maxHeight && !modalShow && !visible)
-        setEntered(true);
 
       if (!modalShow && !isOutsideCanvas && !entered && !visible) {
         joinedClient?.set({
@@ -152,13 +162,11 @@ const RoomPage = ({ userID, color }) => {
       style={{
         width: '100%',
         height: '100vh',
-        display: 'flex',
       }}
       onContextMenu={() => {
         setModalShow(true);
         return false;
-      }}
-    >
+      }}>
       <VideoWrapper
         visible={visible}
         setVisible={setVisible}
@@ -171,6 +179,7 @@ const RoomPage = ({ userID, color }) => {
           onHide={() => setEntered(false)}
           setVisible={setVisible}
           setEntered={setEntered}
+          roomName={roomTitle}
         />
       )}
       <div className='ui-card shadow top-left'>
@@ -195,40 +204,59 @@ const RoomPage = ({ userID, color }) => {
           </Col>
         </Row>
       </div>
-      <div
-        id='canvas'
-        style={{
-          width: '70%',
-          height: '500px',
-          background: '#f2f2f2',
-          zIndex: '-100000',
-        }}
-        onMouseOver={(_e) => setIsOutsideCanvas(true)}
-        onMouseLeave={(_e) => setIsOutsideCanvas(false)}
-      >
-        {Object.values(joined)?.map((obj, idx) => {
-          // console.log(obj);
-          return (
-            <div
-              key={idx}
-              style={{
-                top: obj.position?.y,
-                left: obj.position?.x,
-                position: 'absolute',
-                borderRadius: '50%',
-                transition: 'all 0.05s',
-                zIndex: '-1000',
-              }}
-            >
-              <div>
-                <p>{obj.name}</p>
-              </div>
+      <div className='canvas-wrapper'>
+        <div
+          id='canvas'
+          style={{
+            width: '50%',
+            height: '500px',
+            background: '#f2f2f2',
+            zIndex: '-100000',
+          }}
+          onMouseOver={(_e) => setIsOutsideCanvas(true)}
+          onMouseLeave={(_e) => setIsOutsideCanvas(false)}>
+          {Object.values(joined)?.map((obj, idx) => {
+            // console.log(obj);
+            return (
               <div
-                style={{ width: 50, height: 50, background: `#${obj.color}` }}
-              />
-            </div>
-          );
-        })}
+                key={idx}
+                style={{
+                  top: obj.position?.y,
+                  left: obj.position?.x,
+                  position: 'absolute',
+                  borderRadius: '50%',
+                  transition: 'all 0.05s',
+                  zIndex: '-1000',
+                  maxHeight: '90px',
+                }}>
+                <div>
+                  <p>{obj.name}</p>
+                </div>
+                <div
+                  style={{ width: 50, height: 50, background: `#${obj.color}` }}
+                />
+              </div>
+            );
+          })}
+        </div>
+        <div className='meeting-room-wrapper'>
+          <div
+            className='meeting-room-1'
+            onMouseOver={(_e) => {
+              setEntered(true);
+              setRoomTitle('Enter Room 1');
+            }}>
+            Meeting Room 1
+          </div>
+          <div
+            className='meeting-room-2'
+            onMouseOver={(_e) => {
+              setEntered(true);
+              setRoomTitle('Enter Room 2');
+            }}>
+            Meeting Room 2
+          </div>
+        </div>
       </div>
     </div>
   );
