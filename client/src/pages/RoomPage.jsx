@@ -73,6 +73,7 @@ function VideoWrapper({ visible, setVisible, setEntered }) {
     <>
       {visible && (
         <div className='notification-container shadow'>
+          <h3>Room 1</h3>
           <VideoChat />
           <Button
             onClick={() => {
@@ -178,6 +179,9 @@ const RoomPage = ({ userID, color }) => {
           <IoInformationCircle /> Tip: Right click to open the settings menu!
         </p>
       </div>
+      <div className='ui-card shadow top-right'>
+        <h1 className='h4 text-close gradient-text-hero'>MeetBetween Demo</h1>
+      </div>
       <div className='ui-card shadow bottom-right'>
         <p className='text-close'>
           There are {Object.values(joined).length} co-workers online
@@ -202,6 +206,9 @@ const RoomPage = ({ userID, color }) => {
           height: '500px',
           background: '#f2f2f2',
           zIndex: '-100000',
+          background:
+            'url(https://doixzan7hf4ti.cloudfront.net/hack-the-north-assets/officeview.jpg)',
+          backgroundSize: 'cover',
         }}
         onMouseOver={(_e) => setIsOutsideCanvas(true)}
         onMouseLeave={(_e) => setIsOutsideCanvas(false)}
@@ -220,11 +227,16 @@ const RoomPage = ({ userID, color }) => {
                 zIndex: '-1000',
               }}
             >
-              <div>
-                <p>{obj.name}</p>
+              <div className='name-plate mb-2' style={{ textAlign: 'center' }}>
+                <p className='text-close'>{obj.name}</p>
               </div>
               <div
-                style={{ width: 50, height: 50, background: `#${obj.color}` }}
+                style={{
+                  width: '50px',
+                  height: '50px',
+                  background: `#${obj.color}`,
+                }}
+                className='shadow mx-auto'
               />
             </div>
           );

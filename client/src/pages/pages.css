@@ -60,6 +60,13 @@
   margin: 20px;
 }
 
+.top-right {
+  right: 0;
+  top: 0;
+
+  margin: 20px;
+}
+
 .notification-container {
   padding: 1em;
   margin-top: 20px;
@@ -70,7 +77,7 @@
   top: 0;
 
   position: absolute;
-  width: 500px;
+  width: 50%;
 }
 
 .mainbody-wrapper {
@@ -80,4 +87,16 @@
   position: relative;
   justify-content: center;
   align-items: center;
+}
+
+.name-plate {
+  background-color: RGBA(255, 255, 255, 0.6);
+  padding: 10px;
+}
+
+@supports (backdrop-filter: none) {
+  .name-plate {
+    background-color: RGBA(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+  }
 }
