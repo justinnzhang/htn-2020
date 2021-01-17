@@ -17,8 +17,15 @@
   .hero-cover {
     background: url('https://doixzan7hf4ti.cloudfront.net/hack-the-north-assets/hero1alt.svg');
     min-height: 80vh;
-    background-size: contain;
+    background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
   }
+}
+
+.login-form {
+  background: #f2f2f2;
+  border-radius: 8px;
+
+  padding: 3rem;
 }

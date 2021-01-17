@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 
 import './components.css';
 
-import { IoArrowForwardOutline, IoArrowBackOutline } from 'react-icons/io5';
+import { IoArrowForwardOutline, IoArrowBackwardOutline } from 'react-icons/io5';
 
 const InvisibleButton = ({ text, location, direction }) => {
   switch (direction) {
-    case 'forward':
+    case direction === 'forward':
       return (
         <div className='invisible-btn font-weight-medium'>
           <Link to={location}>
@@ -20,12 +20,12 @@ const InvisibleButton = ({ text, location, direction }) => {
           </Link>
         </div>
       );
-    case 'backward':
+    case direction === 'backward':
       return (
         <div className='invisible-btn font-weight-medium'>
           <Link to={location}>
             <div className='arrow-btn'>
-              <IoArrowBackOutline />
+              <IoArrowBackwardOutline />
             </div>{' '}
             {text}
           </Link>

@@ -11,9 +11,17 @@ import { IconContext } from 'react-icons';
 import AnimateChild from '../animation/AnimateChild';
 
 const options = [
-  { title: 'Feature 1', description: 'Some words for this part' },
-  { title: 'Feature 2', description: 'Some words for this part' },
-  { title: 'Feature 3', description: 'Some words for this part' },
+  {
+    title: 'Engaging Virtual Space',
+    description:
+      'Users engaging on our platform utilize cursors that act like real-time characters, being able to move around the space ',
+  },
+  {
+    title: 'Real Time Meeting Rooms',
+    description:
+      'Mimicking real office rooms in buildings, users would be able to move in and out of rooms just like an in-person interaction, and enjoying the ability to schedule meetings seamlessly in both the personal and professional setting',
+  },
+  { title: 'Room Bookings', description: 'Some words for this part' },
 ];
 
 const display = [
@@ -82,15 +90,17 @@ const Showcase = () => {
                 >
                   {element.title}
                 </h4>
-                <p className='text-muted text-close d-none d-lg-block'>
-                  {element.description}
-                </p>
+                {index === choice && (
+                  <p className='text-muted text-close d-none d-lg-block'>
+                    {element.description}
+                  </p>
+                )}
               </div>
             </AnimateChild>
           ))}
         </div>
       </Col>
-      <Col sm={12} md={8}>
+      <Col sm={12} md={7}>
         <SlideShow content={display[choice].content} id={display[choice].id} />
       </Col>
     </Row>

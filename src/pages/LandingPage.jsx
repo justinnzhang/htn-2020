@@ -56,7 +56,7 @@ const LandingPage = () => {
                     <p className='lead'>Where hybrid work lives</p>
                   </AnimateChild>
                   <AnimateChild>
-                    <InvisibleButton text='Get Started' />
+                    <InvisibleButton text='Get Started' location='/login' />
                   </AnimateChild>
                 </Col>
                 <Col style={{ minHeight: '70vh' }}></Col>
@@ -174,7 +174,7 @@ const LandingPage = () => {
               <Row className='text-center mb-3'>
                 <Col>
                   <AnimateChild type='up'>
-                    <h2 className='gradient-text-hero'>Features</h2>
+                    <h2 className='mb-4'>Features</h2>
                   </AnimateChild>
                 </Col>
               </Row>
@@ -199,7 +199,7 @@ const LandingPage = () => {
                     <p className='lead'>Hop into our live demo below!</p>
                   </AnimateChild>
                   <AnimateChild type='left'>
-                    <InvisibleButton text='Get Started' />
+                    <InvisibleButton text='Get Started' location='/login' />
                   </AnimateChild>
                 </Col>
                 <Col sm={12} md={8}>

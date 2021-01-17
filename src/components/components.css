@@ -18,12 +18,12 @@
   text-decoration: underline;
 }
 
-.arrow-btn {
+a .arrow-btn {
   display: inline-block;
   transition: all 0.3s ease;
 }
 
-.invisible-btn:hover > .arrow-btn {
+.invisible-btn:hover > a .arrow-btn {
   transform: translateX(5px);
 }
 
@@ -31,7 +31,7 @@
 .card-item {
   background: white;
   padding: 2rem;
-  border-radius: 8px;
+  border-radius: 16px 16px 16px 0px;
 }
 .card-item p {
   padding-bottom: 0px;

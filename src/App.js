@@ -6,6 +6,7 @@ import { customAlphabet } from 'nanoid';
 // Pages
 import LandingPage from './pages/LandingPage';
 import RoomPage from './pages/RoomPage';
+import LoginPage from './pages/LoginPage';
 
 async function AuthCheck({ room, userID }) {
   const response = await fetch('http://localhost:5000/api/roomservice', {
@@ -49,7 +50,7 @@ function useUserID() {
 
   return userID;
 }
-const randomColor = Math.floor(Math.random()*16777215).toString(16);
+const randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
 function App() {
   const userID = useUserID();
@@ -58,19 +59,22 @@ function App() {
       clientParameters={{
         auth: AuthCheck,
         userID: userID,
-      }}>
+      }}
+    >
       <Router>
         <Switch>
           <Route exact path='/'>
             <LandingPage />
           </Route>
+          <Route exact path='/login'>
+            <LoginPage />
+          </Route>
           <Route exact path='/room'>
-            <RoomPage userID={userID} color={randomColor}/>
+            <RoomPage userID={userID} color={randomColor} />
           </Route>
         </Switch>
       </Router>
     </RoomServiceProvider>
-
   );
 }
 
