@@ -1,35 +1,44 @@
 import React, { useEffect } from 'react';
-import { useMap } from '@roomservice/react';
+import { usePresence } from '@roomservice/react';
 
-const RoomPage = () => {
-  const [block, map] = useMap('htn-room', 'blockMap');
+const RoomPage = ({ userID, color }) => {
+  const [joined, joinedClient] = usePresence('myroom', 'joined');
 
   useEffect(() => {
     function onMouseMove(e) {
-      // console.log(`x: ${e.clientX} || y: ${e.clientY}`);
-      map?.set('position', {
-        x: e.clientX,
-        y: e.clientY,
-      });
+      const canvas = document.getElementById('canvas');
+      const maxWidth = parseInt(canvas.style.width);
+      const maxHeight = parseInt(canvas.style.height);
+
+      var x = e.clientX > maxWidth ? maxWidth : e.clientX;
+      var y = e.clientY > maxHeight ? maxHeight : e.clientY;
+      joinedClient?.set({ position: { x, y }, color });
     }
-    var myDiv = document.getElementById('mydiv');
-    myDiv.addEventListener('mousemove', onMouseMove);
-    return () => myDiv.removeEventListener('mousemove', onMouseMove);
-  }, []);
+    // var myDiv = document.getElementById('mydiv');
+    document.addEventListener('mousemove', onMouseMove);
+    return () => document.removeEventListener('mousemove', onMouseMove);
+  }, [joinedClient]);
 
   return (
-    <div id='mydiv' style={{ width: '100vw', height: '100vh' }}>
-      <div
-        style={{
-          top: block.position?.x,
-          left: block.position?.y,
-          position: 'absolute',
-          width: 50,
-          height: 50,
-          background: 'red',
-          transition: 'all 0.25s',
-        }}
-      />
+    <div
+      id='canvas'
+      style={{ width: '300px', height: '400px', position: 'relative' }}>
+      {Object.values(joined)?.map((obj) => {
+        console.log(obj);
+        return (
+          <div
+            style={{
+              top: obj.position?.y,
+              left: obj.position?.x,
+              position: 'absolute',
+              width: 50,
+              height: 50,
+              background: `#${obj.color}`,
+              transition: 'all 0.05s',
+            }}
+          />
+        );
+      })}
     </div>
   );
 };

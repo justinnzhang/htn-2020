@@ -49,12 +49,12 @@ function useUserID() {
 
   return userID;
 }
+const randomColor = Math.floor(Math.random()*16777215).toString(16);
 
 function App() {
   const userID = useUserID();
   return (
     <RoomServiceProvider
-      online={userID !== null}
       clientParameters={{
         auth: AuthCheck,
         userID: userID,
@@ -65,7 +65,7 @@ function App() {
             <LandingPage />
           </Route>
           <Route exact path='/room'>
-            <RoomPage />
+            <RoomPage userID={userID} color={randomColor}/>
           </Route>
         </Switch>
       </Router>
