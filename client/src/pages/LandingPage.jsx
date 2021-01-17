@@ -191,7 +191,7 @@ const LandingPage = () => {
           <Col>
             <Container>
               <Row>
-                <Col lg={{ order: 12 }} className='my-auto'>
+                <Col className='my-auto'>
                   <AnimateChild type='left'>
                     <h2>Ready To Try It Out?</h2>
                   </AnimateChild>

@@ -21,8 +21,17 @@ const Footer = () => {
               </ul>
             </Col>
             <Col>
-              <h2 className='h5 text-close'>About</h2>
-              <p>Simple demo for </p>
+              <h2 className='h5 text-close'>Devpost Submission</h2>
+              <p>
+                See the full write up on{' '}
+                <a
+                  href='https://devpost.com/software/meetbetween/'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  Devpost!
+                </a>
+              </p>
             </Col>
           </Row>
         </Container>

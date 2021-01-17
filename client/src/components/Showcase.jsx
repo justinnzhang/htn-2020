@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Image } from 'react-bootstrap';
 
 import './components.css';
-
-import { IoCaretForward } from 'react-icons/io5';
-import { IconContext } from 'react-icons';
 
 import AnimateChild from '../animation/AnimateChild';
 
@@ -32,25 +29,31 @@ const display = [
   {
     id: 'Key 1',
     content: (
-      <div style={{ background: 'grey', height: '30vh' }}>
-        <p>1 Some content that goes here</p>
-      </div>
+      <Image
+        src='https://doixzan7hf4ti.cloudfront.net/hack-the-north-assets/full-room.png'
+        alt='picture of office'
+        fluid
+      />
     ),
   },
   {
     id: 'Key 2',
     content: (
-      <div style={{ background: 'grey', height: '30vh' }}>
-        <p>2 Some more content that goes here</p>
-      </div>
+      <Image
+        src='https://doixzan7hf4ti.cloudfront.net/hack-the-north-assets/video-chat.png'
+        alt='picture of people in video chat'
+        fluid
+      />
     ),
   },
   {
     id: 'Key 3',
     content: (
-      <div style={{ background: 'grey', height: '30vh' }}>
-        <p>3 Some more more content that goes here</p>
-      </div>
+      <Image
+        src='https://doixzan7hf4ti.cloudfront.net/hack-the-north-assets/last-img2.png'
+        alt='illustrations + video chat'
+        fluid
+      />
     ),
   },
 ];
