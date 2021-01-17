@@ -6,6 +6,11 @@ const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 var cors = require('cors');
 
+const opentok = require('opentok');
+const OT = new opentok(process.env.API_KEY, process.env.API_SECRET);
+const sessionId =
+  '1_MX40NzA4NDg2NH5-MTYxMDg2MTU4MDU5MH5yMzREMnpXcUdaOHVyS0ZUdlJVMDd3ZUt-UH4';
+
 const connectDB = require('./db');
 
 const port = process.env.PORT || 5000;
@@ -14,7 +19,6 @@ const rooms = require('./routes/rooms');
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
-
 
 // cors
 app.use(
@@ -68,6 +72,15 @@ app.post('/api/roomservice', async (req, res) => {
   });
   console.log(r.json);
   return res.json(await r.json());
+});
+
+// Vonage - EndPoint
+app.get('/api/token', (req, res) => {
+  res.send({
+    apiKey: process.env.API_KEY,
+    sessionId,
+    token: OT.generateToken(sessionId, { role: 'publisher' }),
+  });
 });
 
 // The "catchall" handler: for any request that doesn't

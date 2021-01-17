@@ -9,6 +9,8 @@ import { Row, Col, Image, Container, Modal, Button } from 'react-bootstrap';
 
 import { IoInformationCircle } from 'react-icons/io5';
 
+import VideoChat from '../components/VideoChat';
+
 function SettingModal(props) {
   const history = useHistory();
 
@@ -17,7 +19,8 @@ function SettingModal(props) {
       {...props}
       size='sm'
       aria-labelledby='contained-modal-title-vcenter'
-      centered>
+      centered
+    >
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>Settings</Modal.Title>
       </Modal.Header>
@@ -27,7 +30,8 @@ function SettingModal(props) {
           variant='danger'
           onClick={() => {
             history.push('/');
-          }}>
+          }}
+        >
           Logout
         </Button>
       </Modal.Body>
@@ -41,18 +45,47 @@ function EnterRoom(props) {
       {...props}
       size='sm'
       aria-labelledby='contained-modal-title-vcenter'
-      centered>
+      centered
+    >
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>
           Enter Room 1
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Button block variant='secondary'>
+        <Button
+          block
+          variant='secondary'
+          onClick={() => {
+            props.setVisible(true);
+            props.setEntered(false);
+          }}
+        >
           Join Call
         </Button>
       </Modal.Body>
     </Modal>
+  );
+}
+
+function VideoWrapper({ visible, setVisible, setEntered }) {
+  return (
+    <>
+      {visible && (
+        <div className='notification-container shadow'>
+          <VideoChat />
+          <Button
+            block
+            onClick={() => {
+              setVisible(false);
+              setEntered(false);
+            }}
+          >
+            Leave Room
+          </Button>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -62,6 +95,8 @@ const RoomPage = ({ userID, color }) => {
   const [entered, setEntered] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [isOutsideCanvas, setIsOutsideCanvas] = useState(false);
+
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     function onMouseMove(e) {
@@ -90,10 +125,10 @@ const RoomPage = ({ userID, color }) => {
       console.log({ offsetWidth, offsetHeight });
       console.log({ clientX: e.clientX, clientY: e.clientY });
       console.log({ actualX: x, actualY: y });
-      if (e.clientX > maxWidth - 100 && y > maxHeight && !modalShow)
-      setEntered(true);
+      if (e.clientX > maxWidth - 100 && y > maxHeight && !modalShow && !visible)
+        setEntered(true);
 
-      if (!modalShow && !isOutsideCanvas && !entered) {
+      if (!modalShow && !isOutsideCanvas && !entered && !visible) {
         joinedClient?.set({
           position: { x, y },
           color,
@@ -110,7 +145,7 @@ const RoomPage = ({ userID, color }) => {
         event.preventDefault()
       );
     };
-  }, [joinedClient, modalShow, isOutsideCanvas, entered]);
+  }, [joinedClient, modalShow, isOutsideCanvas, entered, visible]);
 
   return (
     <div
@@ -123,15 +158,25 @@ const RoomPage = ({ userID, color }) => {
       onContextMenu={() => {
         setModalShow(true);
         return false;
-      }}>
+      }}
+    >
+      <VideoWrapper
+        visible={visible}
+        setVisible={setVisible}
+        setEntered={setEntered}
+      />
       <SettingModal show={modalShow} onHide={() => setModalShow(false)} />
       {!modalShow && (
-        <EnterRoom show={entered} onHide={() => setEntered(false)} />
+        <EnterRoom
+          show={entered}
+          onHide={() => setEntered(false)}
+          setVisible={setVisible}
+          setEntered={setEntered}
+        />
       )}
       <div className='ui-card shadow top-left'>
         <p className='text-close'>
           <IoInformationCircle /> Tip: Right click to open the settings menu!
-          hello
         </p>
       </div>
       <div className='ui-card shadow bottom-left'>
@@ -155,7 +200,8 @@ const RoomPage = ({ userID, color }) => {
           zIndex: '-100000',
         }}
         onMouseOver={(_e) => setIsOutsideCanvas(true)}
-        onMouseLeave={(_e) => setIsOutsideCanvas(false)}>
+        onMouseLeave={(_e) => setIsOutsideCanvas(false)}
+      >
         {Object.values(joined)?.map((obj, idx) => {
           // console.log(obj);
           return (
@@ -168,7 +214,8 @@ const RoomPage = ({ userID, color }) => {
                 borderRadius: '50%',
                 transition: 'all 0.05s',
                 zIndex: '-1000',
-              }}>
+              }}
+            >
               <div>
                 <p>{obj.name}</p>
               </div>
