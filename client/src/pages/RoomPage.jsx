@@ -134,12 +134,6 @@ const RoomPage = ({ userID, color }) => {
         y = windowHeight - maxHeight - offsetHeight;
       }
 
-      console.log({ windowWidth, windowHeight });
-      console.log({ maxWidth, maxHeight });
-      console.log({ offsetWidth, offsetHeight });
-      console.log({ clientX: e.clientX, clientY: e.clientY });
-      console.log({ actualX: x, actualY: y });
-
       if (!modalShow && !isOutsideCanvas && !entered && !visible) {
         joinedClient?.set({
           position: { x, y },
