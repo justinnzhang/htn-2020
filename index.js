@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -9,7 +10,11 @@ const connectDB = require('./db');
 
 const port = process.env.PORT || 5000;
 
-const rooms = require('./api/routes/rooms');
+const rooms = require('./routes/rooms');
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 
 // cors
 app.use(
@@ -65,7 +70,10 @@ app.post('/api/roomservice', async (req, res) => {
   return res.json(await r.json());
 });
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
-// Default display
-app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+app.listen(port, () => console.log(`Server running on port ${port}`));

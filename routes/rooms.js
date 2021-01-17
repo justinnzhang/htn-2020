@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Room = require("../../models/Room");
+const Room = require("../models/Room");
 
 router.get('/test', (req, res) => {
 	res.send('The admin route works 🙂');

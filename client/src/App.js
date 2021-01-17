@@ -8,8 +8,13 @@ import LandingPage from './pages/LandingPage';
 import RoomPage from './pages/RoomPage';
 import LoginPage from './pages/LoginPage';
 
+const url =
+  process.env.NODE_ENV === 'production'
+    ? '/api/roomservice'
+    : 'http://localhost:5000/api/roomservice';
+
 async function AuthCheck({ room, userID, name }) {
-  const response = await fetch('http://localhost:5000/api/roomservice', {
+  const response = await fetch('/api/roomservice', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -60,8 +65,7 @@ function App() {
       clientParameters={{
         auth: AuthCheck,
         userID: userID,
-      }}
-    >
+      }}>
       <Router>
         <Switch>
           <Route exact path='/'>
