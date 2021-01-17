@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "app": "",
+    "app": "concurrently \"cd server && npm run app\" \"npm start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

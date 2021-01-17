@@ -51,7 +51,7 @@ const LoginPage = () => {
               </AnimateChild>
 
               <AnimateChild>
-                <Form.Group controlId='formBasicEmail'>
+                <Form.Group controlId='formBasicFirstName'>
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
                     type='text'
@@ -63,7 +63,7 @@ const LoginPage = () => {
               </AnimateChild>
 
               <AnimateChild>
-                <Form.Group controlId='formBasicEmail'>
+                <Form.Group controlId='formBasicFirstLast'>
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     type='text'
