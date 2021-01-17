@@ -60,6 +60,13 @@
   margin: 20px;
 }
 
+.top-right {
+  right: 0;
+  top: 0;
+
+  margin: 20px;
+}
+
 .notification-container {
   padding: 1em;
   margin-top: 20px;
@@ -70,7 +77,7 @@
   top: 0;
 
   position: absolute;
-  width: 500px;
+  width: 50%;
 }
 
 .mainbody-wrapper {
@@ -99,8 +106,10 @@
 .meeting-room-1 {
   width: 100%;
   height: 30%;
+  color: white;
   text-align: center;
-  background-color: #cfffc7;
+  background: url(https://doixzan7hf4ti.cloudfront.net/hack-the-north-assets/coffee.jpg);
+  background-size: cover;
 }
 
 .meeting-room-2 {
@@ -108,4 +117,20 @@
   height: 30%;
   text-align: center;
   background-color: #ff9b9b;
+}
+
+.meeting-room-2:hover {
+  cursor: no-drop;
+}
+
+.name-plate {
+  background-color: RGBA(255, 255, 255, 0.6);
+  padding: 10px;
+}
+
+@supports (backdrop-filter: none) {
+  .name-plate {
+    background-color: RGBA(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+  }
 }

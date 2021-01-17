@@ -102,7 +102,12 @@ export default class VideoChat extends React.Component {
         <Row>
           <Col>
             <div id='sessionStatus'>
-              <p>Session Status: {connection}</p>
+              <p
+                style={{
+                  color: connection === 'Connected' ? 'green' : 'black',
+                }}>
+                Session Status: {connection}
+              </p>
             </div>
             {/* {error ? (
             <div className='error'>
@@ -114,29 +119,34 @@ export default class VideoChat extends React.Component {
               sessionId={this.state.sessionData.sessionId}
               token={this.state.sessionData.token}
               onError={this.onSessionError}
-              eventHandlers={this.sessionEventHandlers}
-            >
-              <Button id='videoButton' onClick={this.toggleVideo}>
+              eventHandlers={this.sessionEventHandlers}>
+              <Button
+                id='videoButton'
+                onClick={this.toggleVideo}
+                variant='dark'>
                 {publishVideo ? 'Disable' : 'Enable'} Video
               </Button>
-              <OTPublisher
-                properties={{ publishVideo, width: 200, height: 200 }}
-                onPublish={this.onPublish}
-                onError={this.onPublishError}
-                eventHandlers={this.publisherEventHandlers}
-              />
-              <OTStreams>
-                <Row>
+              <Row className='mt-2 mb-2'>
+                <Col className='my-auto text-center'>
+                  <OTPublisher
+                    properties={{ publishVideo, width: '100%', height: 300 }}
+                    onPublish={this.onPublish}
+                    onError={this.onPublishError}
+                    eventHandlers={this.publisherEventHandlers}
+                  />
+                  <p className='font-weight-bold'>You</p>
+                </Col>
+                <OTStreams>
                   <Col>
                     <OTSubscriber
-                      properties={{ width: 200, height: 200 }}
+                      properties={{ width: 300, height: 200 }}
                       onSubscribe={this.onSubscribe}
                       onError={this.onSubscribeError}
                       eventHandlers={this.subscriberEventHandlers}
                     />
                   </Col>
-                </Row>
-              </OTStreams>
+                </OTStreams>
+              </Row>
             </OTSession>
           </Col>
         </Row>

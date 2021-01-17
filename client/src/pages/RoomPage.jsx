@@ -45,7 +45,9 @@ function EnterRoom(props) {
       aria-labelledby='contained-modal-title-vcenter'
       centered>
       <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>{props.roomName}</Modal.Title>
+        <Modal.Title id='contained-modal-title-vcenter'>
+          {props.roomName}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Button
@@ -67,6 +69,7 @@ function VideoWrapper({ visible, setVisible, setEntered }) {
     <>
       {visible && (
         <div className='notification-container shadow'>
+          <h3>Room 1</h3>
           <VideoChat />
           <Button
             onClick={() => {
@@ -187,6 +190,9 @@ const RoomPage = ({ userID, color }) => {
           <IoInformationCircle /> Tip: Right click to open the settings menu!
         </p>
       </div>
+      <div className='ui-card shadow top-right'>
+        <h1 className='h4 text-close gradient-text-hero'>MeetBetween Demo</h1>
+      </div>
       <div className='ui-card shadow bottom-right'>
         <p className='text-close'>
           There are {Object.values(joined).length} co-workers online
@@ -212,6 +218,9 @@ const RoomPage = ({ userID, color }) => {
             height: '500px',
             background: '#f2f2f2',
             zIndex: '-100000',
+            background:
+              'url(https://doixzan7hf4ti.cloudfront.net/hack-the-north-assets/officeview.jpg)',
+            backgroundSize: 'cover',
           }}
           onMouseOver={(_e) => setIsOutsideCanvas(true)}
           onMouseLeave={(_e) => setIsOutsideCanvas(false)}>
@@ -244,17 +253,17 @@ const RoomPage = ({ userID, color }) => {
             className='meeting-room-1'
             onMouseOver={(_e) => {
               setEntered(true);
-              setRoomTitle('Enter Room 1');
+              setRoomTitle('Enter Kitchen');
             }}>
-            Meeting Room 1
+            <div style={{ backgroundColor: 'black' }}>Kitchen</div>
           </div>
           <div
             className='meeting-room-2'
             onMouseOver={(_e) => {
-              setEntered(true);
-              setRoomTitle('Enter Room 2');
+              // setEntered(true);
+              setRoomTitle('Enter Meeting Room 1');
             }}>
-            Meeting Room 2
+            Meeting Room 1
           </div>
         </div>
       </div>
