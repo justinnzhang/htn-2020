@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fetch = require('node-fetch');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -26,6 +27,37 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+
+app.post('/api/roomservice', async (req, res) => {
+  const body = req.body;
+
+  console.log('Body:', body);
+
+  const user = Math.random().toString(36).substr(2, 9);
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+  const resources = [
+    {
+      object: 'room',
+      room: body.room,
+      permission: 'join',
+    },
+  ];
+  const r = await fetch('https://super.roomservice.dev/provision', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer: ${process.env.ROOMSERVICE_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      user: user,
+      resources: resources,
+    }),
+  });
+  return res.json(await r.json());
+});
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
