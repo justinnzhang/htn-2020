@@ -61,14 +61,10 @@
   background-color: white;
   border-radius: 8px;
 
-  left: 0;
-  right: 0;
-
-  margin-left: auto;
-  margin-right: auto;
+  top: 0;
 
   position: absolute;
-  width: 400px;
+  width: 500px;
 }
 
 .mainbody-wrapper {

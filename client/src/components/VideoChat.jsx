@@ -117,14 +117,14 @@ export default class VideoChat extends React.Component {
               {publishVideo ? 'Disable' : 'Enable'} Video
             </Button>
             <OTPublisher
-              properties={{ publishVideo, width: 500, height: 250 }}
+              properties={{ publishVideo, width: 200, height: 200 }}
               onPublish={this.onPublish}
               onError={this.onPublishError}
               eventHandlers={this.publisherEventHandlers}
             />
             <OTStreams>
               <OTSubscriber
-                properties={{ width: 200, height: 100 }}
+                properties={{ width: 200, height: 200 }}
                 onSubscribe={this.onSubscribe}
                 onError={this.onSubscribeError}
                 eventHandlers={this.subscriberEventHandlers}
