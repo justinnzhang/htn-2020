@@ -8,7 +8,7 @@ import LandingPage from './pages/LandingPage';
 import RoomPage from './pages/RoomPage';
 import LoginPage from './pages/LoginPage';
 
-async function AuthCheck({ room, userID }) {
+async function AuthCheck({ room, userID, name }) {
   const response = await fetch('http://localhost:5000/api/roomservice', {
     method: 'POST',
     headers: {
@@ -18,6 +18,7 @@ async function AuthCheck({ room, userID }) {
     body: JSON.stringify({
       room: room,
       user: userID,
+      name: localStorage.getItem('names meetbetween'),
     }),
   });
 
@@ -26,7 +27,7 @@ async function AuthCheck({ room, userID }) {
   }
 
   const body = await response.json();
-  console.log('body:', body);
+  console.log('RESPONSE body:', body);
   return body;
 }
 

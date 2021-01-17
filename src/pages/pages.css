@@ -29,3 +29,20 @@
 
   padding: 3rem;
 }
+
+.ui-card {
+  background: white;
+  border-radius: 8px;
+  display: inline-block;
+
+  padding: 1rem;
+
+  position: absolute;
+}
+
+.bottom-left {
+  left: 0;
+  bottom: 0;
+
+  margin: 20px;
+}

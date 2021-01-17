@@ -47,6 +47,7 @@ app.post('/api/roomservice', async (req, res) => {
       object: 'room',
       room: body.room,
       permission: 'join',
+      name: body.name,
     },
   ];
   const r = await fetch('https://super.roomservice.dev/provision', {
@@ -60,6 +61,7 @@ app.post('/api/roomservice', async (req, res) => {
       resources: resources,
     }),
   });
+  console.log(r.json);
   return res.json(await r.json());
 });
 

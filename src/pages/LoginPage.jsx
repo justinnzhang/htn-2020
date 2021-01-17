@@ -11,11 +11,15 @@ import AnimateChild from '../animation/AnimateChild';
 import './pages.css';
 import InvisibleButton from '../components/InvisibleButton';
 
+import { usePresence } from '@roomservice/react';
+
 const LoginPage = () => {
   const history = useHistory();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  const [joined, joinedClient] = usePresence('myroom', 'joined');
 
   function handleSubmit() {
     localStorage.setItem('names meetbetween', `${firstName} ${lastName}`);
@@ -23,9 +27,9 @@ const LoginPage = () => {
   }
 
   return (
-    <Container>
+    <Container className='pt-5'>
       <AnimateParent>
-        <Row className='mt-5'>
+        <Row>
           <Col sm={12} md={5}>
             <div className='login-form'>
               <AnimateChild>
@@ -88,19 +92,10 @@ const LoginPage = () => {
                 borderRadius: '8px',
                 color: 'white',
               }}
-              animate={{
-                translateY: [-8, 10, -8],
-              }}
-              transition={{
-                duration: 3.4,
-                loop: Infinity,
-                ease: 'easeInOut',
-                delay: 0.5,
-              }}
               key='co-workers'
               className='text-center d-none d-md-block'
             >
-              <p className='text-close h2'>X</p>
+              <p className='text-close h2'>{Object.values(joined).length}</p>
               <p className='text-close'>co-workers are here</p>
             </motion.div>
             <motion.div
@@ -113,8 +108,12 @@ const LoginPage = () => {
               key='co-workers sm screen'
               className='text-center d-md-none mt-3'
             >
-              <p className='text-close h2'>X</p>
-              <p className='text-close'>co-workers are here</p>
+              <p className='text-close h2'>{Object.values(joined).length}</p>
+              <p className='text-close'>
+                {Object.values(joined).length === 1
+                  ? 'co-worker is here'
+                  : 'co-workers are here'}
+              </p>
             </motion.div>
           </Col>
         </Row>
