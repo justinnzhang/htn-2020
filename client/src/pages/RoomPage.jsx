@@ -17,8 +17,7 @@ function SettingModal(props) {
       {...props}
       size='sm'
       aria-labelledby='contained-modal-title-vcenter'
-      centered
-    >
+      centered>
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>Settings</Modal.Title>
       </Modal.Header>
@@ -28,8 +27,7 @@ function SettingModal(props) {
           variant='danger'
           onClick={() => {
             history.push('/');
-          }}
-        >
+          }}>
           Logout
         </Button>
       </Modal.Body>
@@ -43,8 +41,7 @@ function EnterRoom(props) {
       {...props}
       size='sm'
       aria-labelledby='contained-modal-title-vcenter'
-      centered
-    >
+      centered>
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>
           Enter Room 1
@@ -64,26 +61,47 @@ const RoomPage = ({ userID, color }) => {
 
   const [entered, setEntered] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [isOutsideCanvas, setIsOutsideCanvas] = useState(false);
 
   useEffect(() => {
     function onMouseMove(e) {
-      const canvas = document.getElementById('canvas');
-      const maxWidth = parseInt(canvas.style.width);
-      const maxHeight = parseInt(canvas.style.height);
+      const canvas = e.target.getBoundingClientRect();
 
-      var x = e.clientX > maxWidth ? maxWidth : e.clientX;
-      var y = e.clientY > maxHeight ? maxHeight : e.clientY;
+      const windowWidth = parseInt(canvas.width);
+      const windowHeight = parseInt(canvas.height);
 
-      if (e.clientX > maxWidth - 100 && y < 200) setEntered(true);
+      const maxWidth = windowWidth * 0.7;
+      const offsetWidth = (windowWidth - maxWidth) / 2;
+      const maxHeight = 500;
+      const offsetHeight = (windowHeight - maxHeight) / 2;
 
-      joinedClient?.set({
-        position: { x, y },
-        color,
-        name: localStorage.getItem('names meetbetween'),
-      });
+      var x =
+        e.clientX > windowWidth - maxWidth - offsetWidth
+          ? e.clientX
+          : windowWidth - maxWidth - offsetWidth;
+      // var x = e.clientX;
+      var y =
+        e.clientY > windowHeight - maxHeight - offsetHeight
+          ? e.clientY
+          : windowHeight - maxHeight - offsetHeight;
+      // var y = e.clientY;
+      console.log({ windowWidth, windowHeight });
+      console.log({ maxWidth, maxHeight });
+      console.log({ offsetWidth, offsetHeight });
+      console.log({ clientX: e.clientX, clientY: e.clientY });
+      console.log({ actualX: x, actualY: y });
+      if (e.clientX > maxWidth - 100 && y > maxHeight && !modalShow)
+      setEntered(true);
+
+      if (!modalShow && !isOutsideCanvas && !entered) {
+        joinedClient?.set({
+          position: { x, y },
+          color,
+          name: localStorage.getItem('names meetbetween'),
+        });
+      }
     }
 
-    // var myDiv = document.getElementById('mydiv');
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('contextmenu', (event) => event.preventDefault());
     return () => {
@@ -92,20 +110,28 @@ const RoomPage = ({ userID, color }) => {
         event.preventDefault()
       );
     };
-  }, [joinedClient]);
+  }, [joinedClient, modalShow, isOutsideCanvas, entered]);
 
   return (
     <div
+      className='mainbody-wrapper'
+      style={{
+        width: '100%',
+        height: '100vh',
+        display: 'flex',
+      }}
       onContextMenu={() => {
         setModalShow(true);
         return false;
-      }}
-    >
+      }}>
       <SettingModal show={modalShow} onHide={() => setModalShow(false)} />
-      <EnterRoom show={entered} onHide={() => setEntered(false)} />
+      {!modalShow && (
+        <EnterRoom show={entered} onHide={() => setEntered(false)} />
+      )}
       <div className='ui-card shadow top-left'>
         <p className='text-close'>
           <IoInformationCircle /> Tip: Right click to open the settings menu!
+          hello
         </p>
       </div>
       <div className='ui-card shadow bottom-left'>
@@ -123,17 +149,18 @@ const RoomPage = ({ userID, color }) => {
       <div
         id='canvas'
         style={{
-          width: '1000px',
-          height: '1000px',
-          position: 'relative',
+          width: '70%',
+          height: '500px',
           background: '#f2f2f2',
           zIndex: '-100000',
         }}
-      >
-        {Object.values(joined)?.map((obj) => {
+        onMouseOver={(_e) => setIsOutsideCanvas(true)}
+        onMouseLeave={(_e) => setIsOutsideCanvas(false)}>
+        {Object.values(joined)?.map((obj, idx) => {
           // console.log(obj);
           return (
             <div
+              key={idx}
               style={{
                 top: obj.position?.y,
                 left: obj.position?.x,
@@ -141,10 +168,8 @@ const RoomPage = ({ userID, color }) => {
                 borderRadius: '50%',
                 transition: 'all 0.05s',
                 zIndex: '-1000',
-              }}
-              key={obj.user_id}
-            >
-              <div className='text-nowrap text-center'>
+              }}>
+              <div>
                 <p>{obj.name}</p>
               </div>
               <div
