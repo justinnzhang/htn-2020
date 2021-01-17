@@ -1,14 +1,69 @@
 import React, { useEffect, useState } from 'react';
 import { usePresence } from '@roomservice/react';
 
+import { useHistory } from 'react-router-dom';
+
 import './pages.css';
 
-import { Row, Col, Image, Container } from 'react-bootstrap';
+import { Row, Col, Image, Container, Modal, Button } from 'react-bootstrap';
+
+import { IoInformationCircle } from 'react-icons/io5';
+
+function SettingModal(props) {
+  const history = useHistory();
+
+  return (
+    <Modal
+      {...props}
+      size='sm'
+      aria-labelledby='contained-modal-title-vcenter'
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id='contained-modal-title-vcenter'>Settings</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Button
+          block
+          variant='danger'
+          onClick={() => {
+            history.push('/');
+          }}
+        >
+          Logout
+        </Button>
+      </Modal.Body>
+    </Modal>
+  );
+}
+
+function EnterRoom(props) {
+  return (
+    <Modal
+      {...props}
+      size='sm'
+      aria-labelledby='contained-modal-title-vcenter'
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id='contained-modal-title-vcenter'>
+          Enter Room 1
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Button block variant='secondary'>
+          Join Call
+        </Button>
+      </Modal.Body>
+    </Modal>
+  );
+}
 
 const RoomPage = ({ userID, color }) => {
   const [joined, joinedClient] = usePresence('myroom', 'joined');
 
-  const [show, setShow] = useState(false);
+  const [entered, setEntered] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     function onMouseMove(e) {
@@ -18,6 +73,9 @@ const RoomPage = ({ userID, color }) => {
 
       var x = e.clientX > maxWidth ? maxWidth : e.clientX;
       var y = e.clientY > maxHeight ? maxHeight : e.clientY;
+
+      if (e.clientX > maxWidth - 100 && y < 200) setEntered(true);
+
       joinedClient?.set({
         position: { x, y },
         color,
@@ -27,23 +85,38 @@ const RoomPage = ({ userID, color }) => {
 
     // var myDiv = document.getElementById('mydiv');
     document.addEventListener('mousemove', onMouseMove);
-    return () => document.removeEventListener('mousemove', onMouseMove);
+    document.addEventListener('contextmenu', (event) => event.preventDefault());
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('contextmenu', (event) =>
+        event.preventDefault()
+      );
+    };
   }, [joinedClient]);
 
   return (
     <div
       onContextMenu={() => {
-        alert('ye');
+        setModalShow(true);
         return false;
       }}
     >
+      <SettingModal show={modalShow} onHide={() => setModalShow(false)} />
+      <EnterRoom show={entered} onHide={() => setEntered(false)} />
+      <div className='ui-card shadow top-left'>
+        <p className='text-close'>
+          <IoInformationCircle /> Tip: Right click to open the settings menu!
+        </p>
+      </div>
       <div className='ui-card shadow bottom-left'>
         <Row>
           <Col>
             <Image src='https://picsum.photos/100/100' roundedCircle fluid />
           </Col>
           <Col className='my-auto'>
-            <p>{localStorage.getItem('names meetbetween')}</p>
+            <p className='text-close font-weight-medium'>
+              {localStorage.getItem('names meetbetween')}
+            </p>
           </Col>
         </Row>
       </div>
@@ -69,6 +142,7 @@ const RoomPage = ({ userID, color }) => {
                 transition: 'all 0.05s',
                 zIndex: '-1000',
               }}
+              key={obj.user_id}
             >
               <div className='text-nowrap text-center'>
                 <p>{obj.name}</p>

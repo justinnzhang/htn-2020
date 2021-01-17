@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "app": "concurrently \"npm run start\" \"cd client && npm start\"",
+    "app": "concurrently \"nodemon index.js\" \"cd client && npm start\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
